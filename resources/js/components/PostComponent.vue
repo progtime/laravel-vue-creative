@@ -1,31 +1,13 @@
 <template>
     <div>
-        <SinglePostComponent></SinglePostComponent>
-        <div>name: {{ name }}</div>
-        <div>job: {{ vasyaJob }}</div>
-        <button @click="sayHello">Say Hello</button>
+        <CreatePerson />
     </div>
 </template>
 
 <script>
-import SinglePostComponent from "./SinglePostComponent";
+import CreatePerson from "./Person/CreatePerson.vue";
 export default {
     name: "PostComponent",
-    components: { SinglePostComponent },
-    data() {
-        return {
-            name: "vasya"
-        };
-    },
-    methods: {
-        sayHello() {
-            console.log("hello");
-        }
-    },
-    computed: {
-        vasyaJob() {
-            return this.name + " Work in shop";
-        }
-    }
+    components: { CreatePerson }
 };
 </script>

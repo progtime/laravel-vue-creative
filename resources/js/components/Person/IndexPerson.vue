@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 <template v-for="person in persons">
-                    <tr>
+                    <tr :key="person.id">
                         <th scope="row">{{ person.id }}</th>
                         <td>{{ person.name }}</td>
                         <td>{{ person.age }}</td>
@@ -27,7 +27,10 @@
                             >
                         </td>
                     </tr>
-                    <tr :class="isEdit(person.id) ? '' : 'd-none'">
+                    <tr
+                        :class="isEdit(person.id) ? '' : 'd-none'"
+                        :key="person.id"
+                    >
                         <th scope="row">{{ person.id }}</th>
                         <td><input type="text" class="form-control" /></td>
                         <td><input type="number" class="form-control" /></td>

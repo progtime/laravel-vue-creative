@@ -21,7 +21,7 @@
                         <td>
                             <a
                                 href="#"
-                                @click.prevent="changeEditPersonId(person.id)"
+                                @click.prevent="changeEditPersonId(person)"
                                 class="btn btn-success"
                                 >Edit</a
                             >
@@ -32,13 +32,13 @@
                         :key="person.id"
                     >
                         <th scope="row">{{ person.id }}</th>
-                        <td><input type="text" class="form-control" /></td>
-                        <td><input type="number" class="form-control" /></td>
-                        <td><input type="text" class="form-control" /></td>
+                        <td><input type="text" class="form-control" v-model="currentPerson.name" /></td>
+                        <td><input type="number" class="form-control" v-model="currentPerson.age" /></td>
+                        <td><input type="text" class="form-control" v-model="currentPerson.job" /></td>
                         <td>
                             <a
                                 href="#"
-                                @click.prevent="changeEditPersonId(null)"
+                                @click.prevent="updatePerson"
                                 class="btn btn-success"
                                 >Update</a
                             >
@@ -56,7 +56,12 @@ export default {
     data() {
         return {
             persons: [],
-            editPersonId: null
+            editPersonId: null,
+            currentPerson: {
+                name: '',
+                age: null,
+                job: ''
+            }
         };
     },
     mounted() {
@@ -68,8 +73,17 @@ export default {
                 this.persons = res.data;
             });
         },
-        changeEditPersonId(id) {
-            this.editPersonId = id;
+        changeEditPersonId(person) {
+            this.editPersonId = person.id;
+            this.currentPerson = person;
+        },
+        updatePerson() {
+            this.editPersonId = null;
+            this.currentPerson = {
+                name: '',
+                age: null,
+                job: ''
+            };
         },
         isEdit(id) {
             return this.editPersonId === id;

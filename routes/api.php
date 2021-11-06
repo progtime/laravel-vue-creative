@@ -18,8 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['namespace'=>'Person', 'prefix'=>'people'], function () {
+Route::group(['namespace' => 'Person', 'prefix' => 'people'], function () {
     Route::post('/', 'StoreController');
+    Route::get('/', 'IndexController');
 });
-
-

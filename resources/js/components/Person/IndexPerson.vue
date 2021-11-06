@@ -13,7 +13,10 @@
             </thead>
             <tbody>
                 <template v-for="person in persons">
-                    <tr :key="person.id">
+                    <tr
+                        :class="isEdit(person.id) ? 'd-none' : ''"
+                        :key="person.id"
+                    >
                         <th scope="row">{{ person.id }}</th>
                         <td>{{ person.name }}</td>
                         <td>{{ person.age }}</td>
@@ -32,9 +35,27 @@
                         :key="person.id"
                     >
                         <th scope="row">{{ person.id }}</th>
-                        <td><input type="text" class="form-control" v-model="currentPerson.name" /></td>
-                        <td><input type="number" class="form-control" v-model="currentPerson.age" /></td>
-                        <td><input type="text" class="form-control" v-model="currentPerson.job" /></td>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="currentPerson.name"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                class="form-control"
+                                v-model="currentPerson.age"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="currentPerson.job"
+                            />
+                        </td>
                         <td>
                             <a
                                 href="#"
@@ -58,9 +79,9 @@ export default {
             persons: [],
             editPersonId: null,
             currentPerson: {
-                name: '',
+                name: "",
                 age: null,
-                job: ''
+                job: ""
             }
         };
     },
@@ -78,12 +99,21 @@ export default {
             this.currentPerson = person;
         },
         updatePerson() {
-            this.editPersonId = null;
-            this.currentPerson = {
-                name: '',
-                age: null,
-                job: ''
-            };
+            axios
+                .patch(`/api/people/${this.editPersonId}`, {
+                    name: this.currentPerson.name,
+                    age: this.currentPerson.age,
+                    job: this.currentPerson.job
+                })
+                .then(res => {
+                    this.getPeoples();
+                    this.editPersonId = null;
+                    this.currentPerson = {
+                        name: "",
+                        age: null,
+                        job: ""
+                    };
+                });
         },
         isEdit(id) {
             return this.editPersonId === id;
